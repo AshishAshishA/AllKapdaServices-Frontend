@@ -93,6 +93,7 @@ const Signup = () => {
 
   const handleSignUp = async () => {
     let response = undefined;
+    let user = undefined;
     if (updateStatus == true) {
       response = await axios.put(
         `${BASE_URL}/register/${userProfile.id}/`,
@@ -110,6 +111,8 @@ const Signup = () => {
           },
         }
       );
+      console.log(response);
+      user = response.data;
     } else {
       response = await axios.post(
         `${BASE_URL}/register/`,
@@ -129,6 +132,7 @@ const Signup = () => {
           },
         }
       );
+      user = response.data.customer;
     }
 
     if (
@@ -136,7 +140,6 @@ const Signup = () => {
       response.status === 201 ||
       response.status === 204
     ) {
-      const user = response.data.customer;
       // delete user.customer_order;
       setUserProfile(user);
       setLoginState(true);
